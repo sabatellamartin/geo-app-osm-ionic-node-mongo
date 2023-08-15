@@ -117,26 +117,34 @@ docker exec -ti mongo-container /bin/bash
   - Organization form
 
 
-Menu
+#### Menu
+
 <img src="img/menu.png" alt="Menu" style="zoom: 80%;" />
 
-List operations
+#### List operations
+
 <img src="img/inicio-listado-operaciones.png" alt="Operations lists" style="zoom:80%;" />
 
-Report Form
+#### Report Form
+
 <img src="img/formulario-reporte.png" alt="Report form" style="zoom:80%;" />
 
-Pass Form
+#### Pass Form
+
 <img src="img/formulario-contraseña.png" alt="Change passwd" style="zoom:80%;" />
 
-Active Operation
+#### Active Operation
+
 <img src="img/operacion-activa.png" alt="Active operation" style="zoom:80%;" />
 
-Detail Operation
+#### Detail Operation
+
 <img src="img/detalle-operacion.png" alt="Operation detail" style="zoom:80%;" />
 
-Map OSM
+#### Map OSM
+
 <img src="img/despliegue-mapa.png" alt="OSM view" style="zoom:80%;" />
 
-Basic Map OSM
+#### Basic Map OSM
+
 <img src="img/despliegue-mapa-no-osm.png" alt="OSM declarative" style="zoom:80%;" />
