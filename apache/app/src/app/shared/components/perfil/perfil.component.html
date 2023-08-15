@@ -1,0 +1,197 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      Perfil
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar('')">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label position="floating">Rol <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        placeholder="Rol"
+        type="text"
+        [(ngModel)]="perfil.role"
+        [ngModelOptions]="{standalone: true}"
+        #perfilRole
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Nombre <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        placeholder="Nombre"
+        type="text"
+        [(ngModel)]="perfil.name"
+        [ngModelOptions]="{standalone: true}"
+        #perfilName
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Correo electrónico <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        placeholder="Correo electrónico"
+        type="email"
+        [(ngModel)]="perfil.email"
+        [ngModelOptions]="{standalone: true}"
+        #perfilEmail
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ciudad</ion-label>
+      <ion-input
+        placeholder="Ciudad"
+        type="text"
+        [(ngModel)]="perfil.city"
+        [ngModelOptions]="{standalone: true}"
+        #perfilCity
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">País</ion-label>
+      <ion-input
+        placeholder="País"
+        type="text"
+        [(ngModel)]="perfil.country"
+        [ngModelOptions]="{standalone: true}"
+        #perfilCountry
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input
+        placeholder="Teléfono"
+        type="text"
+        [(ngModel)]="perfil.phone"
+        [ngModelOptions]="{standalone: true}"
+        #perfilPhone
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="perfil.fuerza">
+      <ion-label position="floating">Fuerza</ion-label>
+      <ion-input
+        placeholder="Fuerza"
+        type="text"
+        [(ngModel)]="perfil.fuerza.nombre"
+        [ngModelOptions]="{standalone: true}"
+        #perfilFuerza
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="perfil.division">
+      <ion-label position="floating">División</ion-label>
+      <ion-input
+        placeholder="División"
+        type="text"
+        [(ngModel)]="perfil.division.nombre"
+        [ngModelOptions]="{standalone: true}"
+        #perfilDivision
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="perfil.brigada">
+      <ion-label position="floating">Brigada</ion-label>
+      <ion-input
+        placeholder="Brigada"
+        type="text"
+        [(ngModel)]="perfil.brigada.nombre"
+        [ngModelOptions]="{standalone: true}"
+        #perfilBrigada
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="perfil.unidad">
+      <ion-label position="floating">Unidad</ion-label>
+      <ion-input
+        placeholder="Unidad"
+        type="text"
+        [(ngModel)]="perfil.unidad.nombre"
+        [ngModelOptions]="{standalone: true}"
+        #perfilUnidad
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar *ngIf="perfil.urlGitHub" slot="start">
+        <img [src]="perfil.urlGitHub" />
+      </ion-avatar>
+      <ion-label position="floating">Imagen</ion-label>
+      <ion-input
+        placeholder="URL de imagén de perfil"
+        type="text"
+        [(ngModel)]="perfil.urlGitHub"
+        [ngModelOptions]="{standalone: true}"
+        #perfilUrlGitHub>
+      </ion-input>
+    </ion-item>
+
+    <ion-item hidden>
+      <ion-label position="floating">IMEI del dispositivo asociado</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="perfil.imei"
+        [ngModelOptions]="{standalone: true}"
+        #perfilImei
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="opcionesVerificacion" hidden>
+      <ion-label>Verificado</ion-label>
+      <ion-select
+        [(ngModel)]="perfil.verified"
+        [ngModelOptions]="{standalone: true}"
+        [compareWith]="compareFnClave"
+        #perfilVerificado
+        disabled>
+        <ion-select-option *ngFor="let opcion of opcionesVerificacion" [value]="opcion.clave">{{opcion.valor}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item hidden>
+      <ion-label position="floating">Código de verificación</ion-label>
+      <ion-input
+        type="text"
+        [value]="perfil.verification"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="abrirCambiarPassword()">Cambiar contraseña</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardar()">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

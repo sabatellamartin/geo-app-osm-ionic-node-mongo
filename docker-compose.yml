@@ -1,0 +1,66 @@
+version: '3.5'
+
+services:
+
+  apache:
+    build:
+      context: apache/
+    container_name: "apache-service"
+    restart: unless-stopped
+    volumes:
+      - ./apache/app/www:/usr/local/apache2/htdocs/
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - 80:80
+    depends_on:
+      - node
+    links:
+      - node:node
+    networks:
+      - app-network
+      
+  node:
+    container_name: "node-service"
+    build:
+      context: node/
+    restart: unless-stopped
+    volumes:
+      - ./node/app-server:/usr/src/app
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    working_dir: /usr/src/app
+    environment:
+      NODE_ENV: development #production
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo
+    links:
+      - mongo:mongo
+    networks:
+      - app-network
+
+  mongo:
+    build: 
+      context: mongo/
+    container_name: "mongo-service"
+    restart: unless-stopped
+    environment:
+      MONGO_DATA_DIR: /data/db
+      MONGO_LOG_DIR: /dev/null
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: mysecretpassword
+      MONGO_INITDB_DATABASE: admin
+    volumes:
+      - ./mongo/data/db:/data/db
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - 27017:27017
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

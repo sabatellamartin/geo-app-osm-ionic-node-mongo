@@ -1,0 +1,114 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <!--
+    <ion-buttons slot="start">
+      <ion-button (click)="opcionesRecorrido($event)">
+        <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    -->
+    <ion-title>
+      Operaci&oacute;n
+      <ion-chip *ngIf="operacion.estado" outline="true" color="primary" size="small">
+        <ion-label color="primary">{{operacion.estado}}</ion-label>
+      </ion-chip>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content #content>
+
+  <!--MAPA-->
+  <div slot="fixed" id="map" class="map"></div>
+
+<!--
+
+  <ion-list lines="full">  
+    <ion-item *ngIf="patrullas">
+      <ion-label>Patrulla</ion-label>
+      <ion-select
+        [(ngModel)]="selectedPatrulla"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarPatrulla()"
+        #recorridoPatrulla>
+        <ion-select-option *ngFor="let patrulla of patrullas" [value]="patrulla">{{patrulla.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+-->
+  <!--<ion-toolbar class="contenido">
+    <ion-button [disabled]="!selectedPatrulla||coordenadaActual" (click)="iniciarRecorrido()">Iniciar</ion-button>
+    <ion-button [disabled]="!coordenadaActual" (click)="terminarRecorrido()">Terminar</ion-button>
+    <ion-button (click)="obtenerPosicionActual()">Posicion</ion-button>
+    <ion-button (click)="geo.setSource('osm')">OSM</ion-button>
+    <ion-button (click)="geo.setSource('stamen')">Stamen</ion-button>
+  </ion-toolbar>-->
+  <div class="contenido" *ngIf="operacion">
+
+    <ion-card>
+      <ion-card-header class="ion-text-center">
+        <ion-card-subtitle *ngIf="operacion.tipo">{{operacion.tipo}}</ion-card-subtitle>
+        <ion-card-title *ngIf="operacion.nombre">{{operacion.nombre}}</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-text class="ion-text-center ion-text-wrap">
+          <p *ngIf="operacion.estado">Estado: {{operacion.estado}}</p>
+          <p *ngIf="operacion.timestamp">Creada: {{operacion.timestamp|date:'d/MM/yyyy HH:mm.s'}}</p>
+          <!--<p *ngIf="operacion.timestamp">Iniciada: {{operacion.timestamp|date:'d/MM/yyyy HH:mm.s'}}</p>
+          <p *ngIf="operacion.timestampPausa">Pausada: {{operacion.timestampPausa|date:'d/MM/yyyy HH:mm.s'}}</p>
+          <p *ngIf="operacion.timestampFin">Finalizada: {{operacion.timestampFin|date:'d/MM/yyyy HH:mm.s'}}</p>-->
+          <p *ngIf="operacion.oficiales&&operacion.oficiales>0">Oficiales: {{operacion.oficiales}}</p>
+          <p *ngIf="operacion.subalternos&&operacion.subalternos>0">Subalternos: {{operacion.subalternos}}</p>
+          <p *ngIf="operacion.vehiculos&&operacion.vehiculos>0">Vehiculos: {{operacion.vehiculos}}</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+
+    <!--
+    <ion-button (click)="geo.setSource('osm')">OSM</ion-button>
+    <ion-button (click)="geo.setSource('stamen')">Stamen</ion-button>-->
+
+    <mensajes *ngIf="operacion.mensajes" [operacion]="operacion"></mensajes>
+
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button size="small" (click)="capturar()">
+        <ion-icon slot="icon-only" name="camera"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-item class="item-mensaje">
+      <ion-input
+        type="text"
+        placeholder="Escriba un mensaje"
+        [(ngModel)]="texto"
+        [ngModelOptions]="{standalone: true}"
+        autofocus="true"
+        #textoInput>
+      </ion-input>
+    </ion-item>
+    
+    <ion-buttons slot="end">
+      <ion-fab-button *ngIf="texto||texto.length>0" size="small" (click)="enviarMensaje()">
+        <ion-icon name="send" size="small"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="!texto||texto.length==0" size="small" (click)="opcionesRecorrido($event)">
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>

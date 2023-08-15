@@ -1,0 +1,50 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      Detalle de la operaci&oacute;n
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf='operacion&&operacion.recorridos' slot="fixed" id="map" class="map"></div>
+  
+  <ion-card *ngIf="operacion" class="operacion">
+
+    <ion-list>
+      <ion-item lines="none">
+        <ion-text slot="start">Vista mapa Statment/OSM</ion-text>
+        <ion-toggle slot="end" [checked]="osmMap" (ionChange)="alCambiarMapa()"></ion-toggle>
+      </ion-item>
+    </ion-list>
+    
+    <ion-card-header class="ion-text-center">
+      <ion-card-subtitle *ngIf="operacion.tipo">{{operacion.tipo}}</ion-card-subtitle>
+      <ion-card-title *ngIf="operacion.nombre">{{operacion.nombre}}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      
+        <ion-text *ngIf="operacion.timestamp">Creada el {{operacion.timestamp|date:'d/MM/yyyy HH:mm.s'}}<br></ion-text>
+        <ion-text class="ion-text-center ion-text-wrap" *ngIf="operacion.estados&&operacion.estados.length>0">{{operacion | estadoActual:'tipo'}} desde {{operacion | estadoActual:'timestamp'}}<br></ion-text>
+        <ion-text *ngIf="operacion.oficiales&&operacion.oficiales>0">Oficiales: {{operacion.oficiales}}<br></ion-text>
+        <ion-text *ngIf="operacion.subalternos&&operacion.subalternos>0">Subalternos: {{operacion.subalternos}}<br></ion-text>
+        <ion-text *ngIf="operacion.vehiculos&&operacion.vehiculos>0">Vehiculos: {{operacion.vehiculos}}<br></ion-text>
+
+        <ion-text class="ion-text-center ion-text-wrap" *ngIf="usuario&&usuario.fuerza&&usuario.fuerza.nombre">{{usuario.fuerza.nombre}}<br></ion-text>
+        <ion-text *ngIf="usuario&&usuario.division&&usuario.division.nombre">{{usuario.division.nombre}}<br></ion-text>
+        <ion-text *ngIf="usuario&&usuario.brigada&&usuario.brigada.nombre">{{usuario.brigada.nombre}}<br></ion-text>
+        <ion-text *ngIf="usuario&&usuario.unidad&&usuario.unidad.nombre">{{usuario.unidad.nombre}}<br></ion-text>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ver-mensajes *ngIf="isFullOperacion" [operacion]="operacion"></ver-mensajes>
+
+</ion-content>

@@ -1,0 +1,123 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      Organismo
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar('')">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list lines="full" *ngIf="organismo">
+
+    <ion-item *ngIf="tiposOrganismos">
+      <ion-label>Tipo Organismo <ion-text color="primary">*</ion-text></ion-label>
+      <ion-select
+        [(ngModel)]="organismo.tipoOrganismo"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarTipoOrganismo()"
+        [compareWith]="compareFn"
+        #organismoTipoOrganismo>
+        <ion-select-option *ngFor="let tipoOrganismo of tiposOrganismos" [value]="tipoOrganismo">{{tipoOrganismo.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="selectedOrganismos&&selectedOrganismos.length>0&&organismo.tipoOrganismo&&organismo.tipoOrganismo.nivel&&organismo.tipoOrganismo.nivel>1">
+      <ion-label>Organismo superior <ion-text color="primary">*</ion-text></ion-label>
+      <ion-select
+        [(ngModel)]="organismo.organismo"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarOrganismo()"
+        [compareWith]="compareFn"
+        #organismoOrganismo>
+        <ion-select-option *ngFor="let selectedOrganismo of selectedOrganismos" [value]="selectedOrganismo">{{selectedOrganismo.acronimo}}. {{selectedOrganismo.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Nombre <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="organismo.nombre"
+        [ngModelOptions]="{standalone: true}"
+        #organismoNombre
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Acrónimo <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="organismo.acronimo"
+        [ngModelOptions]="{standalone: true}"
+        #organismoAcronimo
+        required>
+      </ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Abreviación <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="organismo.abreviacion"
+        [ngModelOptions]="{standalone: true}"
+        #organismoAbreviacion
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Código <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="organismo.codigo"
+        [ngModelOptions]="{standalone: true}"
+        #organismoCodigo
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Identificador</ion-label>
+      <ion-input
+        type="text"
+        [value]="organismo._id"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Creado el</ion-label>
+      <ion-input
+        type="text"
+        [value]="organismo.createdAt|date:'dd/MM/yyyy HH:mm:s'"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Última actualización</ion-label>
+      <ion-input
+        type="text"
+        [value]="organismo.updatedAt|date:'dd/MM/yyyy HH:mm:s'"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardar()">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

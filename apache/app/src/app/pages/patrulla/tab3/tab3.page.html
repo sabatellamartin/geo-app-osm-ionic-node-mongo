@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Mapa Service
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-toolbar>
+    <ion-button [disabled]="!coordenadaActual" (click)="terminarRecorrido()">Terminar</ion-button>
+    <ion-button [disabled]="!coordenadaActual" (click)="locate()">My posicion</ion-button>
+    <ion-button (click)="geo.setSource('osm')">OSM</ion-button>
+    <ion-button (click)="geo.setSource('stamen')">Stamen</ion-button>
+  </ion-toolbar>
+  
+  <div id="map" class="map"></div>
+
+
+</ion-content>

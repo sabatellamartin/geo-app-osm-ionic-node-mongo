@@ -1,0 +1,217 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      Usuario
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar('')">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list lines="full" *ngIf="usuario">
+
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input
+        placeholder="Sobreescribir para cambiar"
+        type="password"
+        [(ngModel)]="usuario.password"
+        [ngModelOptions]="{standalone: true}"
+        [disabled]="!changePassword"
+        #usuarioPassword>
+      </ion-input>
+      <ion-buttons slot="end">
+        <ion-button (click)="toggleChangePassword()">
+          <ion-icon slot="icon-only" name="key-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item *ngIf="roles">
+      <ion-label>Rol <ion-text color="primary">*</ion-text></ion-label>
+      <ion-select
+        [(ngModel)]="usuario.role"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarRol()"
+        #usuarioRole>
+        <ion-select-option *ngFor="let rol of roles" [value]="rol">{{rol}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Nombre completo <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="usuario.name"
+        [ngModelOptions]="{standalone: true}"
+        #usuarioName
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Teléfono <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="usuario.phone"
+        [ngModelOptions]="{standalone: true}"
+        #usuarioPhone
+        required>
+      </ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Correo electrónico (institucional) <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="email"
+        [(ngModel)]="usuario.email"
+        [ngModelOptions]="{standalone: true}"
+        #usuarioEmail
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Ciudad <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="usuario.city"
+        [ngModelOptions]="{standalone: true}"
+        #usuarioCity
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">País <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="usuario.country"
+        [ngModelOptions]="{standalone: true}"
+        #usuarioCountry
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">IMEI del dispositivo asociado</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="usuario.imei"
+        [ngModelOptions]="{standalone: true}"
+        #usuarioImei>
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="fuerzas&&fuerzas.length>0">
+      <ion-label>Fuerza <ion-text color="primary">*</ion-text></ion-label>
+      <ion-select
+        [(ngModel)]="usuario.fuerza"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarFuerza()"
+        [compareWith]="compareFn"
+        #usuarioFuerza>
+        <ion-select-option *ngFor="let fuerza of fuerzas" [value]="fuerza">{{fuerza.acronimo}}. {{fuerza.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="divisiones&&divisiones.length>0">
+      <ion-label>División</ion-label>
+      <ion-select
+        [(ngModel)]="usuario.division"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarDivision()"
+        [compareWith]="compareFn"
+        #usuarioDivision>
+        <ion-select-option *ngFor="let division of divisiones" [value]="division">{{division.acronimo}}. {{division.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="brigadas&&brigadas.length>0">
+      <ion-label>Brigada</ion-label>
+      <ion-select
+        [(ngModel)]="usuario.brigada"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarBrigada()"
+        [compareWith]="compareFn"
+        #usuarioBrigada>
+        <ion-select-option *ngFor="let brigada of brigadas" [value]="brigada">{{brigada.acronimo}}. {{brigada.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="unidades&&unidades.length>0">
+      <ion-label>Unidad</ion-label>
+      <ion-select
+        [(ngModel)]="usuario.unidad"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarUnidad()"
+        [compareWith]="compareFn"
+        #usuarioUnidad>
+        <ion-select-option *ngFor="let unidad of unidades" [value]="unidad">{{unidad.nombre}}. {{unidad.acronimo}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="opcionesVerificacion">
+      <ion-label>Verificado</ion-label>
+      <ion-select
+        [(ngModel)]="usuario.verified"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarVerificado()"
+        #usuarioVerificado
+        disabled>
+        <ion-select-option *ngFor="let opcion of opcionesVerificacion" [value]="opcion.clave">{{opcion.valor}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Código de verificación</ion-label>
+      <ion-input
+        type="text"
+        [value]="usuario.verification"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Identificador</ion-label>
+      <ion-input
+        type="text"
+        [value]="usuario._id"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Creado el</ion-label>
+      <ion-input
+        type="text"
+        [value]="usuario.createdAt|date:'dd/MM/yyyy HH:mm:s'"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Última actualización</ion-label>
+      <ion-input
+        type="text"
+        [value]="usuario.updatedAt|date:'dd/MM/yyyy HH:mm:s'"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardar()">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

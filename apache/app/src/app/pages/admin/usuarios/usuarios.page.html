@@ -1,0 +1,59 @@
+<cabezal-busqueda titulo="Usuarios" (buscarEvent)="buscar($event)"></cabezal-busqueda>
+
+<ion-content>
+
+  <!-- Default Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="!usuarios||usuarios.length==0">
+    <ion-card-content>
+      <ion-text>Aún no hay usuarios para listar</ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list class="listado" *ngIf="usuarios&&usuarios.length>0">
+
+    <ion-list-header>
+      Lista de organismos
+    </ion-list-header>
+    
+    <ion-item *ngFor="let usuario of usuarios">
+      <ion-label>
+        <h2>{{usuario.name}}</h2>
+        <h3>{{usuario.email}}</h3>
+        <ion-text>{{usuario.role}}</ion-text>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="editar(usuario)">
+          <ion-icon slot="icon-only" name="pencil-outline" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" >
+    <ion-fab-button color="primary" (click)="agregar()" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!--
+  <ion-fab horizontal="start" vertical="bottom" slot="fixed" >
+    <ion-fab-button color="secondary" (click)="actualizar()" >
+      <ion-icon name="sync"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  -->
+
+</ion-content>

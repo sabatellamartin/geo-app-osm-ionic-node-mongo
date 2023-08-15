@@ -1,0 +1,53 @@
+/*MENSAJES*/
+.visto {
+  //color: var(--ion-color-secondary);
+  color: #61a5ff;
+}
+.novisto {
+  //color: var(--ion-color-secondary);
+  color: grey;
+}
+.header-menu-avatar {
+  margin: auto;
+  //padding-top:3px;
+  width: 32px;
+  height: 32px;
+}
+.img {
+  width: 100%;
+  height: 100%;
+}
+.mensaje {
+  padding: 10px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+}
+.mensaje-emisor {
+  background: #dfe4f5;//var(--ion-color-tertiary);
+  color: black;
+  border-radius: 15px 15px 2px 15px;
+}
+.mensaje-receptor {
+  background: #6e89e6;//var(--ion-color-primary);
+  color: #fff;
+  border-radius: 2px 15px 15px 15px;
+}
+.tiempo {
+  float: right;
+  font-size: small;
+}
+.tiempo-emisor {
+  color: #0e0e0e;
+}
+.tiempo-receptor {
+  color: #dfdfdf;
+}
+.input-mensaje {
+  margin-bottom: 10px;
+}  
+.conectado {
+  font-size: small;
+  margin-top: -2px;
+  margin-bottom: 2px;
+}

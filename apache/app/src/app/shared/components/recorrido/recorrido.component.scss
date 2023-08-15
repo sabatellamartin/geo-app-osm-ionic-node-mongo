@@ -1,0 +1,21 @@
+.map {
+    width: 100%;
+    height: calc(40vh - 45px);
+    //border-bottom: 2px solid grey;
+    box-shadow: 0 0 15px grey;
+}
+
+.contenido {
+    margin-top: calc(40vh - 45px);
+    padding-top: 5px;
+}
+
+.item-mensaje {
+    margin-left: 5px;
+    margin-right: 5px;  
+}
+
+.chip-estado {
+  margin: auto;
+  display: block;
+}

@@ -1,0 +1,45 @@
+<ion-card  class="ion-text-center" *ngIf="!operacion.mensajes||operacion.mensajes.length==0">
+  <ion-card-content>
+    No hay mensajes para la operación.
+  </ion-card-content>
+</ion-card>
+
+<ion-grid>
+  <ion-row *ngFor="let mensaje of operacion.mensajes">
+    
+    <ion-chip outline color="primary" class="estado-operacion" *ngIf="esEstado(mensaje)" mode="ios">
+      <ion-label>{{mensaje.texto}} el {{fechaService.formatoFecha(mensaje.timestamp)}} {{fechaService.formatoAMPM(mensaje.timestamp)}}</ion-label>
+    </ion-chip>
+
+    <ion-col class="mensaje mensaje-emisor" offset="3" size="9" *ngIf="esReporte(mensaje)">
+      <ion-item detail (click)="verReporte(mensaje)" lines="none" style="border-radius: 10px;">
+        <ion-icon name="document"></ion-icon>
+        <ion-label>
+          <h3>Env&iacute;o de reporte</h3>
+          <ion-text>{{fechaService.formatoFecha(mensaje.timestamp)}} {{fechaService.formatoAMPM(mensaje.timestamp)}}</ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-col>
+
+    <ion-col class="mensaje mensaje-emisor" offset="3" size="9" *ngIf="usuarioEnvia(mensaje)">
+      <span>{{mensaje.texto}}</span>
+      <div class="ion-text-right tiempo tiempo-emisor">
+        <br>
+        {{fechaService.formatoAMPM(mensaje.timestamp)}}
+        {{fechaService.formatoFecha(mensaje.timestamp)}}
+        <ion-icon class="novisto" name="checkmark" size="small" *ngIf="mensaje.estado==='Enviado'"></ion-icon>
+        <ion-icon class="visto" name="checkmark" size="small" *ngIf="mensaje.estado==='Visto'"></ion-icon>
+      </div>
+    </ion-col>
+
+    <ion-col class="mensaje mensaje-receptor" size="9" *ngIf="usuarioEnvia(mensaje)">
+      <span>{{mensaje.texto}}</span>
+      <div class="ion-text-right tiempo tiempo-receptor">
+        <br>
+        {{fechaService.formatoAMPM(mensaje.timestamp)}}
+        {{fechaService.formatoFecha(mensaje.timestamp)}}
+      </div>
+    </ion-col>
+
+  </ion-row>
+</ion-grid>

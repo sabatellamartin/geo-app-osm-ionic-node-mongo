@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Reportes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<!--
+  <ion-list lines="full">  
+    <ion-item *ngIf="patrullas">
+      <ion-label>Patrulla</ion-label>
+      <ion-select
+        [(ngModel)]="selectedPatrulla"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarPatrulla()"
+        #recorridoPatrulla>
+        <ion-select-option *ngFor="let patrulla of patrullas" [value]="patrulla">{{patrulla.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-toolbar>
+    <ion-button [disabled]="!selectedPatrulla||coordenadaActual" (click)="iniciarRecorrido()">Iniciar</ion-button>
+    <ion-button [disabled]="!coordenadaActual" (click)="terminarRecorrido()">Terminar</ion-button>
+    <ion-button (click)="obtenerPosicionActual()">Posicion</ion-button>
+    <ion-button (click)="geo.setSource('osm')">OSM</ion-button>
+    <ion-button (click)="geo.setSource('stamen')">Stamen</ion-button>
+  </ion-toolbar>
+  
+  <div id="map" class="map"></div>
+-->
+</ion-content>

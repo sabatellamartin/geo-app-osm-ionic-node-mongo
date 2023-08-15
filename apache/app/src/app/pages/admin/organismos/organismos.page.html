@@ -1,0 +1,54 @@
+<cabezal-busqueda titulo="Organimos" (buscarEvent)="buscar($event)"></cabezal-busqueda>
+
+<ion-content>
+
+  <!-- Default Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="!organismos||organismos.length==0">
+    <ion-card-content>
+      <ion-text>Aún no hay organismos para listar</ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list class="listado" *ngIf="organismos&&organismos.length>0">
+
+    <ion-list-header>
+      Lista de organismos
+    </ion-list-header>
+    
+    <ion-item *ngFor="let organismo of organismos">
+      <ion-label>
+        <h2>{{organismo.nombre}} ({{organismo.acronimo}})</h2>
+        <h3>{{organismo.abreviacion}}</h3>
+        <ion-text>
+          <span *ngIf="organismo.codigo">{{organismo.codigo}} </span> 
+          <span *ngIf="organismo.tipoOrganismo&&organismo.tipoOrganismo.nombre">{{organismo.tipoOrganismo.nombre}}</span>
+        </ion-text>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="editar(organismo)">
+          <ion-icon slot="icon-only" name="pencil-outline" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" >
+    <ion-fab-button color="primary" (click)="agregar()" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

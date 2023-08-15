@@ -1,0 +1,57 @@
+<cabezal-busqueda titulo="geoapp" (buscarEvent)="buscar($event)"></cabezal-busqueda>
+
+<ion-content [fullscreen]="true">
+ 
+  <!-- Default Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="!operaciones||operaciones.length==0">
+    <ion-card-content>
+      <ion-text>Aún no hay operaciones para listar</ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list class="listado" *ngIf="operaciones&&operaciones.length>0">
+
+    <ion-list-header>
+      Lista de operaciones
+    </ion-list-header>
+
+    <ion-item *ngFor="let operacion of operaciones">
+      <ion-avatar slot="start">
+        <ion-img *ngIf="operacion&&operacion.user&&operacion.user.urlGitHub" [src]="operacion.user.urlGitHub"></ion-img>
+        <ion-img *ngIf="!(operacion&&operacion.user&&operacion.user.urlGitHub)" src="../../assets/soldadoUy.jpg"></ion-img>  
+      </ion-avatar>
+      <ion-label (click)="verOperacion(operacion)">
+        <h2>{{ operacion.nombre }}</h2>
+        <h3 *ngIf="operacion.user">{{ operacion.user.name }}</h3>
+        <h3 *ngIf="operacion.user">
+          <ion-text *ngIf="operacion.user.fuerza&&operacion.user.fuerza.acronimo">{{ operacion.user.fuerza?.acronimo }} </ion-text>
+          <ion-text *ngIf="operacion.user.division&&operacion.user.division.acronimo">{{ operacion.user.division?.acronimo }} </ion-text>
+          <ion-text *ngIf="operacion.user.brigada&&operacion.user.brigada.acronimo">{{ operacion.user.brigada?.acronimo }} </ion-text>
+          <ion-text *ngIf="operacion.user.unidad&&operacion.user.unidad.acronimo">{{ operacion.user.unidad?.acronimo }} </ion-text>
+        </h3>
+        <h3>{{ operacion.estado }}</h3>
+        <ion-text>{{ operacion.timestamp | date:'dd/MM/YYYY HH:mm' }}</ion-text>
+      </ion-label>
+      <ion-buttons *ngIf="operacion" slot="end">
+        <ion-button size="small" (click)="opcionesOperacion($event, operacion)">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <!--<ion-icon name="map" slot="end" (click)="agregarRecorrido(operacion)"></ion-icon>-->
+      <!--<ion-icon *ngIf="operacion._id" name="create-outline" slot="end" (click)="editarOperacion(operacion)"></ion-icon>-->
+      <!--<ion-icon *ngIf="!operacion._id" name="trash" slot="end" (click)="eliminarOperacion(operacion)"></ion-icon>-->
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

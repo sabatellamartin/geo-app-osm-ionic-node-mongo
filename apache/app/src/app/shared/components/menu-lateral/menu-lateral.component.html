@@ -1,0 +1,78 @@
+<ion-menu contentId="menu-content" type="overlay" side="start" menuId="first" class="menu-cuenta" (ionDidOpen)="menuOpened()" (ionDidClose)="menuClosed()">
+
+  <ion-header>
+    <!-- TOOLBAR CUENTA -->
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="closeFirst()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Cuenta</ion-title>
+    </ion-toolbar>
+    <!-- HEAD CUENTA -->
+    <ion-toolbar *ngIf="perfil">
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <ion-img [src]="perfil.urlGitHub" *ngIf="perfil.urlGitHub"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2 *ngIf="perfil.name">{{perfil.name}}</h2>
+          <ion-text *ngIf="perfil.role">{{perfil.role}}</ion-text><br>
+          <ion-text *ngIf="perfil.email">{{perfil.email}}</ion-text><br>
+          <ion-text *ngIf="perfil.city&&perfil.country">{{perfil.city}}, {{perfil.country}}</ion-text>
+        </ion-label>
+        <ion-button slot="end" shape="round" fill="clear" (click)="irAPerfil()">
+          <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="contenido">
+  <ion-menu-toggle auto-hide="true">
+      
+      
+      <ion-list>
+        <ion-item-divider>
+          <ion-label>
+            Versión {{version}}
+          </ion-label>
+        </ion-item-divider>
+
+        <ion-item *ngFor="let entrada of entradas" [routerDirection]="'root'" [routerLink]="[entrada.url]" lines="none">
+          <ion-icon *ngIf="entrada.icon" [icon]="entrada.icon" slot="start"></ion-icon>
+          <ion-label>
+            {{entrada.title}}
+          </ion-label>
+        </ion-item>
+
+        <ion-item-divider></ion-item-divider>
+
+        <ion-item lines="none" (click)="descargarApp()" *ngIf="perfil">
+          <ion-icon icon="download" slot="start"></ion-icon>
+          <ion-label>
+            Descargar aplicación
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none" (click)="descargarAppCloud()" *ngIf="perfil">
+          <ion-icon icon="download" slot="start"></ion-icon>
+          <ion-label>
+            Descargar aplicación Cloud
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none" (click)="logout()" *ngIf="perfil">
+          <ion-icon icon="exit" slot="start"></ion-icon>
+          <ion-label>
+            Cerrar sesión
+          </ion-label>
+        </ion-item>
+        
+      </ion-list>
+    
+    </ion-menu-toggle>
+  </ion-content>
+
+</ion-menu>

@@ -1,0 +1,51 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      Reporte
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list lines="full" *ngIf="reporte">
+
+    <ion-item>
+      <ion-label position="floating">Detalle <ion-text color="primary">*</ion-text></ion-label>
+      <ion-textarea
+        rows="6"
+        maxlength="3000"
+        placeholder="Detalle del reporte."
+        type="text"
+        [(ngModel)]="reporte.detalle"
+        [ngModelOptions]="{standalone: true}"
+        #reporteDetalle
+        required>
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Alta</ion-label>
+      <ion-input
+        type="text"
+        [value]="reporte.timestamp|date:'dd/MM/yyyy HH:mm:s'"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardar()">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

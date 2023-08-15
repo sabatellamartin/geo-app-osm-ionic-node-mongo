@@ -1,0 +1,4 @@
+<ion-list>
+  <!--<ion-list-header class="opciones-header">Opciones operaci&oacute;n</ion-list-header>-->
+  <ion-item class="opciones-item" button *ngFor="let opcion of opciones" (click)="seleccionOpcion(opcion.id)">{{opcion.descripcion}}</ion-item>
+</ion-list>

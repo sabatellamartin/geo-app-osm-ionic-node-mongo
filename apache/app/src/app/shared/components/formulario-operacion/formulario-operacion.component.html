@@ -1,0 +1,99 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>
+      Operación
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list lines="full" *ngIf="operacion">
+
+    <ion-item>
+      <ion-label position="floating">Nombre <ion-text color="primary">*</ion-text></ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="operacion.nombre"
+        [ngModelOptions]="{standalone: true}"
+        #operacionNombre
+        required>
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="tipos">
+      <ion-label>Tipo <ion-text color="primary">*</ion-text></ion-label>
+      <ion-select
+        [(ngModel)]="operacion.tipo"
+        [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="alCambiarTipo()"
+        #operacionTipo>
+        <ion-select-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Oficiales</ion-label>
+      <ion-input
+        type="number"
+        [(ngModel)]="operacion.oficiales"
+        [ngModelOptions]="{standalone: true}"
+        #operacionOficiales>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Subalternos</ion-label>
+      <ion-input
+        type="number"
+        [(ngModel)]="operacion.subalternos"
+        [ngModelOptions]="{standalone: true}"
+        #operacionSubalternos>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Veh&iacute;culos</ion-label>
+      <ion-input
+        type="number"
+        [(ngModel)]="operacion.vehiculos"
+        [ngModelOptions]="{standalone: true}"
+        #operacionVehiculos>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Estado</ion-label>
+      <ion-input
+        type="text"
+        [value]="operacion.estado"
+        #operacionEstado
+        disabled>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Alta</ion-label>
+      <ion-input
+        type="text"
+        [value]="operacion.timestamp|date:'dd/MM/yyyy HH:mm:s'"
+        disabled>
+      </ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardar()">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

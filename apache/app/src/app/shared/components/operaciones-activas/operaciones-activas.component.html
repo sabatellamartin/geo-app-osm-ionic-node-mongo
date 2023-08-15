@@ -1,0 +1,70 @@
+<cabezal-busqueda titulo="Operaciones activas" (buscarEvent)="buscar($event)"></cabezal-busqueda>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Default Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-card *ngIf="!operaciones||operaciones.length==0">
+    <ion-card-content>
+      <ion-text>Ingresa una nueva operacion activa para comenzar</ion-text>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-list *ngIf="operaciones&&operaciones.length>0">
+    
+    <ion-list-header>
+      Lista de operaciones activas
+    </ion-list-header>
+
+    <ion-item *ngFor="let operacion of operaciones">
+      <ion-avatar slot="start">
+        <ion-img *ngIf="operacion&&operacion.user&&operacion.user.urlGitHub" [src]="operacion.user.urlGitHub"></ion-img>
+        <ion-img *ngIf="!(operacion&&operacion.user&&operacion.user.urlGitHub)" src="../../assets/soldadoUy.jpg"></ion-img>  
+      </ion-avatar>
+      <ion-label (click)="modalRecorrido(operacion)">
+        <h2>{{ operacion.nombre }}</h2>
+        <h3>{{ operacion | estadoActual:'tipo' }}</h3> 
+        <h3>{{ operacion | estadoActual:'timestamp' }}</h3>
+        <!--<h3>Creada el {{ operacion.timestamp | date:'dd/MM/YYYY HH:mm:ss a' }}</h3>
+        <ion-text>{{ operacion.user.name }}</ion-text>-->
+      </ion-label>
+      <ion-buttons *ngIf="operacion" slot="end">
+        
+        <ion-button size="small" (click)="opcionesOperacionActiva($event, operacion)">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+        <!--
+        <ion-button *ngIf="operacion.estado" (click)="iniciarOperacion(operacion)">
+          <ion-text *ngIf="operacion.estado=='Nueva'">Iniciar</ion-text>
+          <ion-text *ngIf="operacion.estado=='Iniciada'">Pausar</ion-text>
+          <ion-text *ngIf="operacion.estado=='Pausa'">Reanudar</ion-text>
+          <ion-text *ngIf="operacion.estado=='Finalizada'">Finalizada</ion-text>
+        </ion-button>-->
+        <!--
+        <ion-button (click)="eliminarOperacion(operacion)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>-->
+      </ion-buttons>
+      <!--
+      <ion-icon name="map" slot="end" (click)="agregarRecorrido(operacion)"></ion-icon>
+      <ion-icon *ngIf="operacion._id" name="create-outline" slot="end" (click)="editarOperacion(operacion)"></ion-icon>
+      <ion-icon *ngIf="!operacion._id" name="trash" slot="end" (click)="eliminarOperacion(operacion)"></ion-icon>-->
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-fab horizontal="end" vertical="bottom" slot="fixed" >
+  <ion-fab-button (click)="formularioOperacion(null)" >
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab horizontal="start" vertical="bottom" slot="fixed" >
+  <ion-fab-button (click)="sincronizarOperaciones()" >
+    <ion-icon name="sync"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
